@@ -1,4 +1,4 @@
 /* Add CSS styles here! */
-body {
-  font-family: sans-serif;
+.snowpack-test {
+  border: 1px solid red;
 }

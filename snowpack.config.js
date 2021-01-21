@@ -1,10 +1,43 @@
+const { merge } = require("webpack-merge");
+const SystemJSPublicPathWebpackPlugin = require("systemjs-webpack-interop/SystemJSPublicPathWebpackPlugin");
+
 /** @type {import("snowpack").SnowpackUserConfig } */
 module.exports = {
   mount: {
     /* ... */
   },
   plugins: [
-    /* ... */
+    [
+      "@snowpack/plugin-webpack",
+      {
+        extendConfig(config) {
+          delete config.optimization.runtimeChunk;
+          delete config.optimization.splitChunks;
+
+          return merge(config, {
+            mode: "development",
+            module: {
+              rules: [
+                {
+                  parser: {
+                    system: false,
+                  },
+                },
+              ],
+            },
+            output: {
+              libraryTarget: "system",
+            },
+            plugins: [
+              new SystemJSPublicPathWebpackPlugin({
+                systemjsModuleName: "snowpack-test",
+                rootDirectoryLevel: 2,
+              }),
+            ],
+          });
+        },
+      },
+    ],
   ],
   routes: [
     /* Enable an SPA Fallback in development: */
@@ -17,10 +50,8 @@ module.exports = {
   packageOptions: {
     /* ... */
   },
-  devOptions: {
-    /* ... */
-  },
+  devOptions: {},
   buildOptions: {
-    /* ... */
+    baseUrl: "http://localhost:8080/",
   },
 };

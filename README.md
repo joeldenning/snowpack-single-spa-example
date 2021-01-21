@@ -1,24 +1,33 @@
-# New Project
+This project shows how to create a single-spa application with Snowpack
 
-> ✨ Bootstrapped with Create Snowpack App (CSA).
+### Standalone Mode
 
-## Available Scripts
+```sh
+yarn start
+```
 
-### npm start
-
-Runs the app in the development mode.
+Runs the app in standalone development mode.
 Open http://localhost:8080 to view it in the browser.
 
 The page will reload if you make edits.
 You will also see any lint errors in the console.
 
-### npm run build
+### Integrated Mode
 
-Builds a static copy of your site to the `build/` folder.
-Your app is ready to be deployed!
+```sh
+yarn start
 
-**For the best production performance:** Add a build bundler plugin like [@snowpack/plugin-webpack](https://github.com/snowpackjs/snowpack/tree/main/plugins/plugin-webpack) or [snowpack-plugin-rollup-bundle](https://github.com/ParamagicDev/snowpack-plugin-rollup-bundle) to your `snowpack.config.json` config file.
+open 'http://single-spa-playground.org/playground/instant-test?name=snowpack-test&framework=react&useNativeModules=true&url=http%3A%2F%2Flocalhost%3A8080%2Findex.js'
+```
 
-### Q: What about Eject?
+You can load this application into a single-spa root config via import-map-overrides. See more at https://single-spa.js.org/docs/recommended-setup#local-development
 
-No eject needed! Snowpack guarantees zero lock-in, and CSA strives for the same.
+The URL to use for import-map-overrides is http://localhost:8080/index.js
+
+### Building
+
+```sh
+yarn build
+```
+
+This produces a `build` directory. Note the changes in the `snowpack.config.js`, which alter the output bundle to work as a SystemJS module.
